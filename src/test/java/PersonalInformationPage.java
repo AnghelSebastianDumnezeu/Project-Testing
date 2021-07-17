@@ -15,6 +15,8 @@ public class PersonalInformationPage extends  PageObject {
     private WebElement ConfirmPassword;
     @FindBy(xpath = "/html/body/div/div/section/div/form/div[1]/button")
     private WebElement NextButton1;
+    @FindBy(xpath = "/html/body/div/div/section/div/form/div[1]/h3")
+    private WebElement PersonalInformationHeader;
 
     public PersonalInformationPage(WebDriver driver) {
         super(driver);
@@ -34,6 +36,7 @@ public class PersonalInformationPage extends  PageObject {
     public void writeIntoFifthField(){
         ConfirmPassword.sendKeys("kdfj");
     }
+    public String getPersonalInformationHeader() {return this.PersonalInformationHeader.getText();}
     public void ClickNextButton1(){
         Utils.scrollToElement(driver, this.NextButton1);
         NextButton1.click();

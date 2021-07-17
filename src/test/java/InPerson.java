@@ -2,16 +2,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class Ipsum2 extends PageObject {
+public class InPerson extends PageObject {
+    @FindBy(xpath = "/html/body/h1")
+    private WebElement InPersonHeader;
+
     @FindBy(xpath = "/html/body/a")
     private WebElement InPersonReturn;
 
-    public Ipsum2(WebDriver driver) {
+    public InPerson(WebDriver driver) {
         super(driver);
     }
 
     public void InPersonReturn() {
         this.InPersonReturn.click();
+    }
+
+    public String getInPersonHeader() {
+        return this.InPersonHeader.getText();
     }
 
 }

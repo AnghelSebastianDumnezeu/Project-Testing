@@ -13,24 +13,6 @@ public class TestPlan {
         System.setProperty("webdriver.chrome.driver", Utils.CHROME_DRIVER_LOCATION);
     }
 
-    // ELIMINAM
-    @Test(testName = "Verify if submenu opens")
-    public void VerifySubmenu(){
-        driver.get(Utils.BASE_URL);
-        Homepage webForm = new Homepage(driver);
-        webForm.ClickOnContainer();
-    }
-
-
-    // IGNORNA
-    @Test(testName = "Opens submenu button")
-    public void  WhatYoullLearn(){
-        driver.get(Utils.BASE_URL);
-        Homepage webForm = new Homepage(driver);
-        webForm.ClickOnWhatYoullLearn();
-
-    }
-
     @Test(testName = "Click on Questions section from navbar")
     public void Questions(){
         driver.get(Utils.BASE_URL);
@@ -44,7 +26,6 @@ public class TestPlan {
         Homepage webForm = new Homepage(driver);
         webForm.Instructors();
         Assert.assertEquals(webForm.getOurInstructors(),"Our Instructors");
-        // DE ADAUGAT VERIFICARE FOLOSIND ASSERT
     }
     // Testare Enrollment: Username, Email, Password, Confirm Password.
     @Test(testName = "Verify Enrollment button")
@@ -62,54 +43,30 @@ public class TestPlan {
         driver.get(Utils.BASE_URL);
         Homepage webForm = new Homepage(driver);
         webForm.ClickOnVirtual();
-        webForm.ClickVirtualReturn();
+        Virtual virtualWebForm = new Virtual(driver);
+        Assert.assertEquals(virtualWebForm.getVirtualHeader(),"Virtual");
+    }
 
-        Assert.assertEquals(webForm.getVirtualHeader(),"Virtual");
-        // DE ADAUGAT VERIFICARE FOLOSIND ASSERT
-    }
-    @Test(testName = "Click on Virtual 'Hybrid'")
-    public void Hybrid(){
-        driver.get(Utils.BASE_URL);
-        Homepage webForm = new Homepage(driver);
-        webForm.ClickHybrid();
-        // DE ADAUGAT VERIFICARE FOLOSIND ASSERT
-    }
     @Test(testName = "Click Return 'In Person'")
-    public void InPersonReturn(){
+    public void InPersonReturn() {
         driver.get(Utils.BASE_URL);
         Homepage webForm = new Homepage(driver);
         webForm.ClickInPerson();
-        // DE ADAUGAT VERIFICARE FOLOSIND ASSERT
+        InPerson inPersonWebForm = new InPerson(driver);
+        Assert.assertEquals(inPersonWebForm.getInPersonHeader(), "In Person");
     }
 
     @Test(testName = "Return from 'Hybrid'")
-    public void HybridReturn(){
+    public void HybridReturn() {
         driver.get(Utils.BASE_URL);
         Homepage webForm = new Homepage(driver);
         webForm.ClickHybrid();
-        VirtualPage secondPage = new VirtualPage(driver);
-        secondPage.HybridReturn();
-        // DE ADAUGAT VERIFICARE FOLOSIND ASSERT
+        Hybrid secondPage = new Hybrid(driver);
+        Assert.assertEquals(secondPage.getHybridHeader(), "Hybrid");
     }
 
-    @Test(testName = "Click on 'In Person'")
-    public void InPerson(){
-        driver.get(Utils.BASE_URL);
-        Homepage webForm = new Homepage(driver);
-        webForm.ClickInPerson();
-        // DE ADAUGAT VERIFICARE FOLOSIND ASSERT
-
-    }
-    @Test(testName = "Click Fundamentals")
-    public void Fundamentals(){
-        driver.get(Utils.BASE_URL);
-        Homepage webForm = new Homepage(driver);
-        webForm.ClickFundamentals();
-        // DE ADAUGAT PUNCT IN CARE SA NAVIGHEZE PENTRU A DA CLICK PE READ MORE
-        // DE ADAUGAT VERIFICARE FOLOSIND ASSERT
-    }
     @Test(testName = "First name - Positive")
-    public void FirstNamePositiveTest(){
+    public void FirstNamePositiveTest() {
         driver.get(Utils.BASE_URL2);
         PersonalInformationPage webForm = new PersonalInformationPage(driver);
         webForm.writeIntoFirstNameField();
@@ -123,17 +80,17 @@ public class TestPlan {
     }
 
     @Test(testName = "First name - Negative")
-    public void FirstNameNegativeTest(){
+    public void FirstNameNegativeTest() {
         driver.get(Utils.BASE_URL2);
         PersonalInformationPage webForm = new PersonalInformationPage(driver);
         webForm.writeIntoFirstNameField();
         webForm.writeIntoSecondField();
         webForm.writeIntoThirdField();
         webForm.ClickNextButton1();
-        // VERIFICARE FOLOSIND ASSERT CA RAMAI PE ACEASI PAGINA
+        Assert.assertEquals(webForm.getPersonalInformationHeader(), "Personal information");
     }
     @Test(testName = "Contact information - Positive")
-    public void ContactInformationPagePositiveTest(){
+    public void ContactInformationPagePositiveTest() {
         driver.get(Utils.BASE_URL2);
         PersonalInformationPage webFormTemp = new PersonalInformationPage(driver);
         webFormTemp.NavigateToSecondPage();
@@ -157,10 +114,25 @@ public class TestPlan {
         webForm.setEmail();
         webForm.setPhone();
         webForm.setCountry();
-        webForm.setReturnButton1();
+        Assert.assertEquals(webForm.getContactInformationHeader(), "Contact information");
     }
+
+    @Test(testName = "Verify return button in Enrollment")
+    public void ReturnFromContantactInformationToPersonal() {
+        driver.get(Utils.BASE_URL2);
+        PersonalInformationPage webFormTemp = new PersonalInformationPage(driver);
+        webFormTemp.NavigateToSecondPage();
+        Utils.waitForElementToLoad(2);
+        ContactInformationPage webForm = new ContactInformationPage(driver);
+        webForm.setEmail();
+        webForm.setPhone();
+        webForm.setCountry();
+        webForm.setReturnButton1();
+        Assert.assertEquals(webFormTemp.getPersonalInformationHeader(), "Personal information");
+    }
+
     @Test(testName = "Fill Course Options")
-    public void CourseOptionsPage(){
+    public void CourseOptionsPage() {
         driver.get(Utils.BASE_URL2);
         PersonalInformationPage webFormTemp = new PersonalInformationPage(driver);
         webFormTemp.NavigateToSecondPage();
@@ -182,7 +154,7 @@ public class TestPlan {
 
     }
     @Test (testName = "PaymentInformation")
-    public void PaymentInformationPage(){
+    public void PaymentInformationPage() {
         driver.get(Utils.BASE_URL2);
 
         PersonalInformationPage webFormTemp = new PersonalInformationPage(driver);
@@ -204,6 +176,8 @@ public class TestPlan {
         webFormThree.setCVC();
         webFormThree.setYear();
         webFormThree.setMonth();
+        Assert.assertEquals(webFormThree.getPaymentInformationHeader(), "Payment information");
+
     }
 
     @AfterSuite

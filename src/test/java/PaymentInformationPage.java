@@ -22,6 +22,8 @@ public class PaymentInformationPage extends PageObject{
     private WebElement ReturnButton3;
     @FindBy (xpath = "/html/body/div/div/section/div/form/div[4]/div[4]/button[2]")
     private WebElement NextButton4;
+    @FindBy (xpath = "/html/body/div/div/section/div/form/div[4]/h3")
+    private WebElement PaymentInformationHeader;
 
     public void setPaymentInformationPage(){
        PaymentInformationPage.click();
@@ -46,6 +48,9 @@ public class PaymentInformationPage extends PageObject{
     }
     public void setNextButton4(){
         NextButton4.click();
+    }
+    public String getPaymentInformationHeader() {
+        return this.PaymentInformationHeader.getText();
     }
 
 }
